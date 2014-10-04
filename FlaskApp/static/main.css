@@ -7,3 +7,10 @@
     color: white;
     min-height: 255px;
 }
+
+.blurb {
+    color: rgb(107, 42, 56);
+    font-size: 1.2em;
+    margin-top: 15px;
+    text-align: center;
+}
