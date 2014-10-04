@@ -1,8 +1,7 @@
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>StoryLine</title>
-<script src="static/d3.js" type="application/javascript"></script>
 <link href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css" rel="stylesheet">
 <link href="http://twitter.github.com/bootstrap/assets/css/bootstrap-responsive.css" rel="stylesheet">
 <style>
@@ -15,63 +14,13 @@ body {
 </style>
 </head>
 <body>
+
 <div class="fluid-row">
 <div class="well span11 pagination-centered">
-
 <h1><img src="static/storyline-logo.jpg" /></h1>
 <p>StoryLine News is a startup aggregate news source that offers credible content and visual context to the internet news buzz.</p>
 </div>
 </div>
-<div class="fluid-row">
-<div class="span3">
-  <h2>iPhone 6</h2>
-  <div id="timeline"></div>
-</div>
-</div>
-
-<script type="text/javascript">
-
-var stories = [
-  {name:"The iPhone 6 Plus Gets Bent", date:	"2014-09-25T00:00:00"},
-  {name:"Consumer Reports test results find iPhone 6 and 6 Plus not as bendy as believed", date: "2014-09-26T00:00:00"},
-  {name:"The iPhone 6 Review", date:	"2014-09-30T00:00:00"}
-];
-
-var radius = 10, lineWidth = 4;
-var margin = radius*1.5 + lineWidth;
-
-var width = 200, height = 450;
-var timestamps = stories.map(function (d) { return Date.parse(d.date); });
-
-var max = d3.max(timestamps);
-var min = d3.min(timestamps);
-
-var step = (height - 2*margin) / (max - min);
-
-var timeline = d3.select('#timeline')
-  .append('svg').attr('width', width).attr('height', height);
-
-timeline.append('line')
-  .attr('x1', Math.floor(width/2))
-  .attr('x2', Math.floor(width/2))
-  .attr('y1', margin)
-  .attr('y2', height - margin)
-  .style('stroke', '#999')
-  .style('stroke-width', lineWidth);
-
-var circles = timeline.selectAll('circle')
-  .data(stories).enter()
-  .append('circle')
-  .attr('class', 'timeline-event')
-  .attr('r', radius)
-  .style('stroke', '#999')
-  .style('stroke-width', lineWidth)
-  .style('fill', '#fff')
-  .attr('cy', function (d) { return step * (new Date(d.date).getTime() - min) + margin; })
-  .attr('cx', Math.floor(width/2));
-
-circles.attr('title', function (d) { return d.name + ' - ' + new Date(d.date); }); 
-</script>
 
 </body>
 </html>
