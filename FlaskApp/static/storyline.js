@@ -55,7 +55,7 @@ var svg = d3.select("#storylineViz").append("svg")
              //better to keep the viewBox dimensions with variables
             .attr("viewBox", "0 0 " + w + " " + h + 50 )
             .attr("preserveAspectRatio", "xMidYMid meet");
-            
+
 var timeline = svg.append("line")
         .attr("class", "timeline")
         .attr("x1", w/5.0)
@@ -65,12 +65,12 @@ var timeline = svg.append("line")
         .attr("stroke-width", 2)
         .attr("stroke", "black");
 
-var svgDef = svg.append('defs').attr("class", "imagePatterns")        
+var svgDef = svg.append('defs').attr("class", "imagePatterns")
     svgDef.selectAll(".imgPattern")
         .data(data.events)
         .enter()
         .append('pattern')
-        .attr("id", function(d) { return 'pattern' + d.eventID })
+        .attr("id", function(d) { return 'pattern' + d.eventId })
         .attr("class", "imgPattern")
         .attr("patternContentUnits", "objectBoundingBox")
         .attr("width", 1)
@@ -78,8 +78,8 @@ var svgDef = svg.append('defs').attr("class", "imagePatterns")
         .append('image')
         .attr("x", 0).attr("y",0)
         .attr("width", 1).attr("height", 1)
-        .attr("xlink:href", function(d) { return d.img });
-        
+        .attr("xlink:href", function(d) { return d.urls[0].img });
+
 svg.selectAll('.eventNode')
     .data(data.events)
     .enter()
@@ -90,8 +90,17 @@ svg.selectAll('.eventNode')
     .attr("r", 10)
     .style("stroke", 'black')
     .style("stroke-width", 2)
-    .style("fill", 'black');
-    
+    .style("fill", 'black')
+    .on("mouseover", function(d) {
+        target_id = '#urlImg' + d.eventId;
+        d3.select(target_id).style("visibility", "visible");
+    })
+    .on("mouseout", function(d) {
+        target_id = '#urlImg' + d.eventId;
+        d3.select(target_id).style("visibility", "hidden");
+    });
+
+
 svg.selectAll('.eventDateStr')
     .data(data.events)
     .enter()
@@ -102,7 +111,7 @@ svg.selectAll('.eventDateStr')
     .attr("font-size", "20px")
     .style("text-anchor", "end")
     .attr("fill", "Black");
-    
+
 svg.selectAll('.eventTitle')
     .data(data.events)
     .enter()
@@ -111,19 +120,29 @@ svg.selectAll('.eventTitle')
     .attr("y", function(d) { return y(d.date); })
     .text(function(d) { return d.title })
     .attr("font-size", "20px")
-    .attr("fill", "Black");
-    
+    .attr("fill", "Black")
+    .on("mouseover", function(d) {
+        target_id = '#urlImg' + d.eventId;
+        d3.select(target_id).style("visibility", "visible");
+    })
+    .on("mouseout", function(d) {
+        target_id = '#urlImg' + d.eventId;
+        d3.select(target_id).style("visibility", "hidden");
+    });
+
+
 svg.selectAll('.urlImg')
     .data(data.events)
     .enter()
     .append("rect")
-    .attr("id", function(d) {return '#urlImg' + d.eventId })
-    .attr("x", w/5.0 + 45)
-    .attr("y", function(d) { return 25; } )
+    .attr("id", function(d) { return 'urlImg' + d.eventId; })
+    .attr("x", w / 2)
+    .attr("y", function(d) { return y(d.date) - 25; } )
     .attr("width", 80)
     .attr("height", 80)
+    .attr('fill', function(d) { return 'url(#pattern' + d.eventId + ')'; })
     .style("visibility", "hidden")
-    
+
 svg.selectAll('.eventUrl')
     .data(data.events)
     .enter()
@@ -135,13 +154,6 @@ svg.selectAll('.eventUrl')
     .text(function(d) { return d.urls[0].url })
     .attr("font-size", "20px")
     .attr("fill", "Black")
-    .on("mouseover", function(d) {
-        this_node = d3.select(this)
-        console.log(this_node.attr('x'))
-        target_id = '#urlImg' + d.eventId
-        d3.select(target_id).style("visibility", "visible");
-    });
-    
 
 /*
 
@@ -149,9 +161,9 @@ var margin = {top: 40, right: 20, bottom: 40, left: 40},
     width = 800 - margin.left - margin.right,
     height = 400 - margin.top - margin.bottom,
     r = height/11;
-    
+
 var style_color = d3.scale.ordinal()
-    .domain([0, 1, 2, 3]) 
+    .domain([0, 1, 2, 3])
     .range(["#ee8000","#da2454","#437ad7","#27b28c"]);
     //a little not here: because of how we do plans, they will actually be 'null' but that will map to first member of the domain
 
@@ -164,13 +176,13 @@ var x = d3.scale.linear()
     .domain([7, 0])
     .range([0, width])
 
-//zoom is attached to main svg group to capture mouse events there    
+//zoom is attached to main svg group to capture mouse events there
 var zoom = d3.behavior.zoom()
     .x(x)
     .scaleExtent([1, 250])
     .on("zoom", updateVis);
 
-//This is a dummy scale and zoom never attached to a visable svg obj. Used to to control tAxis    
+//This is a dummy scale and zoom never attached to a visable svg obj. Used to to control tAxis
 var tScale = d3.time.scale()
     .domain([oneWeekAgo, now])
     .range([0, width]);
@@ -178,7 +190,7 @@ var tScale = d3.time.scale()
 var tZoom = d3.behavior.zoom()
     .x(tScale)
     .scaleExtent(zoom.scaleExtent());
-    
+
 var tAxis = d3.svg.axis()
     .scale(tScale)
     .orient("bottom")
@@ -190,18 +202,18 @@ var tAxis = d3.svg.axis()
         ["%a", function(d) { return true; }]
     ]));
 
-    
-//Now we can get to drawing our basic elements    
+
+//Now we can get to drawing our basic elements
 var svg = d3.select("#graph").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
     .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
     .call(zoom);
-    
+
 /*
 var svgDef = svg.append('defs').attr("class", "imagePatterns")
-    
+
 svg.append("rect")
     .attr("class", "background")
     .attr("x", 0)
@@ -225,9 +237,9 @@ svg.selectAll("#timeline")
     .attr("stroke-width", 2)
     .attr("stroke", "black");
 
-    
 
-    /*Tool tip for video detail    
+
+    /*Tool tip for video detail
     var tip = d3.tip()
         .attr('class', 'd3-tip')
         .offset([-10, 0])
@@ -237,10 +249,10 @@ svg.selectAll("#timeline")
                     Time logged: <spam style='color:white'>" + d.sessionDate + "</span>";
         });
         svg.call(tip);*/
-        
+
     /*console.log(client)
     console.log(vids)
-    
+
     svgDef.selectAll(".imgPattern")
         .data(d3.values(data.vids))
         .enter()
@@ -254,14 +266,14 @@ svg.selectAll("#timeline")
         .attr("x", 0).attr("y",0)
         .attr("width", 1).attr("height", 1)
         .attr("xlink:href", function(d) { return d.resourceRoot + d.imgFile });
-        
+
     svg.append("text")
         .attr("x", 20)
         .attr("y", 20)
         .text(client.info.firstName + " " + client.info.lastName)
         .attr("font-size", "20px")
         .attr("fill", "Black");
-    
+
     svg.selectAll(".vidSession")
         .data(client.full_sessions)
         .enter()
@@ -275,8 +287,8 @@ svg.selectAll("#timeline")
         .style("fill", function(d) { return "url(#pattern" + d.videoID + ")" })
         .on("mouseover", tip.show)
         .on("mouseout", tip.hide);
-    
-    //cx values for circles set inside onZoom()    
+
+    //cx values for circles set inside onZoom()
     updateVis();
 });
 
