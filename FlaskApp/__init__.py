@@ -6,7 +6,6 @@ app.debug = True
 @app.route('/')
 def home():
     return app.send_static_file('index.html')
-    #return "Hello, I love Digital Ocean!"
 
 @app.route('/iphone6')
 def iphone6():
