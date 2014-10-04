@@ -45,9 +45,6 @@ function renderTimeline(data) {
     for (i in data.events) {
         data.events[i].date = new Date(data.events[i].date);
     };
-    var y = d3.scale.linear()
-        .domain([earliestDate, latestDate])
-        .range([20, h-20 + 800])
 
     var earliestDate = d3.min(data.events, function(d) { return d.date; });
     var latestDate = d3.max(data.events, function(d) { return d.date; });
@@ -60,7 +57,7 @@ function renderTimeline(data) {
         .range([20, h-20 + 800])
 
     var titleHeight = 30;
-    for (i in data.events) {
+    for (i = 0; i < data.events.length; i++) {
         var val = y(data.events[i].date);
         if (i > 0) {
             var prev = data.events[i-1].y;
