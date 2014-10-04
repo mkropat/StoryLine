@@ -41,13 +41,16 @@ function renderTimeline(data) {
     }]
 }*/
 
-    for(var i in data.events) {
+    var i;
+    for (i in data.events) {
         data.events[i].date = new Date(data.events[i].date);
     };
+    var y = d3.scale.linear()
+        .domain([earliestDate, latestDate])
+        .range([20, h-20 + 800])
 
     var earliestDate = d3.min(data.events, function(d) { return d.date; });
     var latestDate = d3.max(data.events, function(d) { return d.date; });
-
 
     var w = $(window).width();
     var h = $(window).height();
@@ -55,6 +58,18 @@ function renderTimeline(data) {
     var y = d3.scale.linear()
         .domain([earliestDate, latestDate])
         .range([20, h-20 + 800])
+
+    var titleHeight = 30;
+    for (i in data.events) {
+        var val = y(data.events[i].date);
+        if (i > 0) {
+            var prev = data.events[i-1].y;
+            if (val - prev < titleHeight) {
+                val = prev + titleHeight;
+            }
+        }
+        data.events[i].y = val;
+    }
 
     var svg = d3.select("#storylineViz").append("svg")
                 .attr("id", "playgraph")
@@ -67,7 +82,7 @@ function renderTimeline(data) {
             .attr("x1", w/5.0)
             .attr("x2", w/5.0)
             .attr("y1", y(earliestDate))
-            .attr("y2", y(latestDate))
+            .attr("y2", data.events[data.events.length - 1].y)
             .attr("stroke-width", 2)
             .attr("stroke", "black");
 
@@ -86,14 +101,15 @@ function renderTimeline(data) {
             .attr("width", 1).attr("height", 1)
             .attr("xlink:href", function(d) { return d.urls[0].img });
 
+    var nodeRadius = 10;
     svg.selectAll('.eventNode')
         .data(data.events)
         .enter()
         .append('circle')
         .attr("class", "eventNode")
-        .attr("cy", function(d) { return y(d.date); })
+        .attr("cy", function(d) { return d.y; })
         .attr("cx", w/5.0)
-        .attr("r", 10)
+        .attr("r", nodeRadius)
         .style("stroke", 'black')
         .style("stroke-width", 2)
         .style("fill", 'black')
@@ -106,13 +122,12 @@ function renderTimeline(data) {
             d3.select(target_id).style("visibility", "hidden");
         });
 
-
     svg.selectAll('.eventDateStr')
         .data(data.events)
         .enter()
         .append("text")
         .attr("x", w/5.0 - 15)
-        .attr("y", function(d) { return y(d.date); })
+        .attr("y", function(d) { return d.y + nodeRadius/2; })
         .text(function(d) {return d.date.toDateString()})
         .attr("font-size", "20px")
         .style("text-anchor", "end")
@@ -123,7 +138,7 @@ function renderTimeline(data) {
         .enter()
         .append("text")
         .attr("x", w/5.0 + 15)
-        .attr("y", function(d) { return y(d.date); })
+        .attr("y", function(d) { return d.y + nodeRadius/2; })
         .text(function(d) { return d.title })
         .attr("font-size", "20px")
         .attr("fill", "Black")
@@ -143,13 +158,13 @@ function renderTimeline(data) {
         .append("rect")
         .attr("id", function(d) { return 'urlImg' + d.eventId; })
         .attr("x", w / 2)
-        .attr("y", function(d) { return y(d.date) - 25; } )
+        .attr("y", function(d) { return d.y - 25; } )
         .attr("width", 80)
         .attr("height", 80)
         .attr('fill', function(d) { return 'url(#pattern' + d.eventId + ')'; })
         .style("visibility", "hidden")
 
-    svg.selectAll('.eventUrl')
+    /*svg.selectAll('.eventUrl')
         .data(data.events)
         .enter()
         .append("a")
@@ -159,7 +174,7 @@ function renderTimeline(data) {
         .attr("y", function(d) { return y(d.date) + 25; })
         .text(function(d) { return d.urls[0].url })
         .attr("font-size", "20px")
-        .attr("fill", "Black")
+        .attr("fill", "Black")*/
 
     /*
 
