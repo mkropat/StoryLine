@@ -12,5 +12,9 @@ def home():
 def iphone6():
     return app.send_static_file('iphone6.html')
 
+@app.route('/ebola')
+def ebola():
+    return app.send_static_file('storyline.html')
+
 if __name__ == "__main__":
     app.run()
