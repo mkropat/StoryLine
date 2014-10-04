@@ -1,7 +1,3 @@
-d3.json('/static/data/Ebola.json', function (data) {
-    renderTimeline(data);
-});
-
 function renderTimeline(data) {
 
 /*var data = {
