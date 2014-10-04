@@ -1,8 +1,9 @@
 .jumbotron {
     margin-bottom: 0px;
     background-image: url(./img/storyline-logo.jpg);
-    background-position: 0% 25%;
+    background-position: 0% 45%;
     background-size: cover;
     background-repeat: no-repeat;
     color: white;
+    min-height: 255px;
 }
