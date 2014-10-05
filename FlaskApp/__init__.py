@@ -15,6 +15,10 @@ def iphone6():
 def hannahGraham():
     return render_template('hannah-graham.html')
 
+@app.route('/hk')
+def hk():
+    return render_template('hk.html')
+
 @app.route('/ebola')
 def ebola():
     return render_template('ebola.html')
