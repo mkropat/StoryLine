@@ -79,8 +79,8 @@ function renderTimeline(data) {
             .attr("x2", w/5.0)
             .attr("y1", y(earliestDate))
             .attr("y2", data.events[data.events.length - 1].y)
-            .attr("stroke-width", 2)
-            .attr("stroke", "black");
+            .attr("stroke", "red")
+            .attr("stroke-width", 4);
 
     var svgDef = svg.append('defs').attr("class", "imagePatterns")
         svgDef.selectAll(".imgPattern")
@@ -106,9 +106,9 @@ function renderTimeline(data) {
         .attr("cy", function(d) { return d.y; })
         .attr("cx", w/5.0)
         .attr("r", nodeRadius)
-        .style("stroke", 'black')
+        .style("stroke", '#001557')
         .style("stroke-width", 2)
-        .style("fill", 'black')
+        .style("fill", '#001557')
         .on("mouseover", function(d) {
             target_id = '#urlImg' + d.eventId;
             d3.select(target_id).style("visibility", "visible");
@@ -132,6 +132,8 @@ function renderTimeline(data) {
     svg.selectAll('.eventTitle')
         .data(data.events)
         .enter()
+        .append("a")
+        .attr("xlink:href", function(d) { return d.urls[0].url })
         .append("text")
         .attr("x", w/5.0 + 15)
         .attr("y", function(d) { return d.y + nodeRadius/2; })
@@ -147,6 +149,17 @@ function renderTimeline(data) {
             d3.select(target_id).style("visibility", "hidden");
         });
 
+    /*svg.selectAll('.eventUrl')
+        .data(data.events)
+        .enter()
+        .append("a")
+        .attr("xlink:href", function(d) { return d.urls[0].url })
+        .append("text")
+        .attr("x", w/5.0 + 15)
+        .attr("y", function(d) { return y(d.date) + 25; })
+        .text(function(d) { return d.urls[0].url })
+        .attr("font-size", "20px")
+        .attr("fill", "Black")*/
 
     svg.selectAll('.urlImg')
         .data(data.events)
@@ -160,17 +173,6 @@ function renderTimeline(data) {
         .attr('fill', function(d) { return 'url(#pattern' + d.eventId + ')'; })
         .style("visibility", "hidden")
 
-    /*svg.selectAll('.eventUrl')
-        .data(data.events)
-        .enter()
-        .append("a")
-        .attr("xlink:href", function(d) { return d.urls[0].url })
-        .append("text")
-        .attr("x", w/5.0 + 15)
-        .attr("y", function(d) { return y(d.date) + 25; })
-        .text(function(d) { return d.urls[0].url })
-        .attr("font-size", "20px")
-        .attr("fill", "Black")*/
 
     /*
 
