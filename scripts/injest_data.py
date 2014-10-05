@@ -52,8 +52,7 @@ for name in names:
                 }
             
             event = events_by_date[event_date]
-            if row['title']:
-                event['title'] = row['title']
+            event['title'] = event['title'] or row['title']
             
             #try:
             #    driver.get(row['url'])
