@@ -10,9 +10,9 @@ def home():
 @app.route('/iphone6')
 def iphone6():
     return app.send_static_file('iphone6.html')
-    
-@app.route('/hk')
-def hk():
+
+@app.route('/hannah-graham')
+def hannahGraham():
     return app.send_static_file('hk.html')
 
 @app.route('/ebola')

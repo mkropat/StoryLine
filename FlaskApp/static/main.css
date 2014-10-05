@@ -14,3 +14,11 @@
     margin-top: 15px;
     text-align: center;
 }
+
+.headlines {
+    margin-top: 20px;
+}
+
+.headlines img {
+    width: 288px;
+}
