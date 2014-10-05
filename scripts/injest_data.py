@@ -1,13 +1,17 @@
-import copy, json
+import copy, json, sys
 from openpyxl import load_workbook
 from selenium import webdriver
 
 #driver = webdriver.Chrome()
 #driver.set_window_size(560, 150)
 
-wb = load_workbook('NewsStories.xlsx')
+filename = 'NewsStories.xlsx'
+if len(sys.argv) > 1:
+    filename = sys.argv[1]
 
-names = ['Ebola','iPhone6']
+wb = load_workbook(filename)
+
+names = ['Ebola','iPhone6','HannahGraham_Missing']
 raw = {}
 stories = []
 event_count = 0
