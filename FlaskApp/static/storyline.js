@@ -132,6 +132,8 @@ function renderTimeline(data) {
     svg.selectAll('.eventTitle')
         .data(data.events)
         .enter()
+        .append("a")
+        .attr("xlink:href", function(d) { return d.urls[0].url })
         .append("text")
         .attr("x", w/5.0 + 15)
         .attr("y", function(d) { return d.y + nodeRadius/2; })
@@ -147,6 +149,17 @@ function renderTimeline(data) {
             d3.select(target_id).style("visibility", "hidden");
         });
 
+    /*svg.selectAll('.eventUrl')
+        .data(data.events)
+        .enter()
+        .append("a")
+        .attr("xlink:href", function(d) { return d.urls[0].url })
+        .append("text")
+        .attr("x", w/5.0 + 15)
+        .attr("y", function(d) { return y(d.date) + 25; })
+        .text(function(d) { return d.urls[0].url })
+        .attr("font-size", "20px")
+        .attr("fill", "Black")*/
 
     svg.selectAll('.urlImg')
         .data(data.events)
@@ -160,17 +173,6 @@ function renderTimeline(data) {
         .attr('fill', function(d) { return 'url(#pattern' + d.eventId + ')'; })
         .style("visibility", "hidden")
 
-    /*svg.selectAll('.eventUrl')
-        .data(data.events)
-        .enter()
-        .append("a")
-        .attr("xlink:href", function(d) { return d.urls[0].url })
-        .append("text")
-        .attr("x", w/5.0 + 15)
-        .attr("y", function(d) { return y(d.date) + 25; })
-        .text(function(d) { return d.urls[0].url })
-        .attr("font-size", "20px")
-        .attr("fill", "Black")*/
 
     /*
 
