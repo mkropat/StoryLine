@@ -2,8 +2,8 @@ import copy, json
 from openpyxl import load_workbook
 from selenium import webdriver
 
-driver = webdriver.Chrome()
-driver.set_window_size(560, 150)
+#driver = webdriver.Chrome()
+#driver.set_window_size(560, 150)
 
 wb = load_workbook('NewsStories.xlsx')
 
@@ -51,16 +51,16 @@ for name in names:
             if row['title']:
                 event['title'] = row['title']
             
-            try:
-                driver.get(row['url'])
-                driver.save_screenshot('./FlaskApp/static/images/event%s.png' % event['eventId'])
-                img_url = 'http://www.storylinenews.co/static/images/event%s.png' % event['eventId']
-            except:
-                print "Couldn't load img for %s" % row['url']
+            #try:
+            #    driver.get(row['url'])
+            #    driver.save_screenshot('./FlaskApp/static/images/event%s.png' % event['eventId'])
+            #    img_url = 'http://www.storylinenews.co/static/images/event%s.png' % event['eventId']
+            #except:
+            #    print "Couldn't load img for %s" % row['url']
             
             event['urls'].append({
                 'url': row['url'],
-                'img': img_url
+                'img': ''
             })
         
             if row['tags']:
