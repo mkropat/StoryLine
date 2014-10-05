@@ -63,11 +63,14 @@ function renderTimeline(data) {
         }
         data.events[i].y = val;
     }
+    var fullHeight = data.events[data.events.length - 1].y;
 
+    console.log(w);
+    console.log(h);
     var svg = d3.select("#storylineViz").append("svg")
                 .attr("id", "playgraph")
                  //better to keep the viewBox dimensions with variables
-                .attr("viewBox", "0 0 " + w + " " + h + 50 )
+                .attr("viewBox", "0 0 " + w + " " + (fullHeight + 50) )
                 .attr("preserveAspectRatio", "xMidYMid meet");
 
     var timeline = svg.append("line")
@@ -75,7 +78,7 @@ function renderTimeline(data) {
             .attr("x1", w/5.0)
             .attr("x2", w/5.0)
             .attr("y1", y(earliestDate))
-            .attr("y2", data.events[data.events.length - 1].y)
+            .attr("y2", fullHeight)
             .attr("stroke-width", 4);
 
     var svgDef = svg.append('defs').attr("class", "imagePatterns")
