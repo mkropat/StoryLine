@@ -11,7 +11,7 @@ if len(sys.argv) > 1:
 
 wb = load_workbook(filename)
 
-names = ['Ebola','iPhone6','HannahGraham_Missing']
+names = ['Ebola', 'iPhone6', 'HannahGraham_Missing', 'HongkongProtests']
 raw = {}
 stories = []
 event_count = 0
