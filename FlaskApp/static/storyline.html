@@ -3,6 +3,27 @@
 
 <html lang="en">
     <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <link rel="icon" href="../../favicon.ico">
+
+        <title>Ebola</title>
+
+        <!-- Bootstrap core CSS -->
+        <link href="./static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link href="./static/main.css" rel="stylesheet">
+
+        <!-- Custom styles for this template -->
+        <link href="jumbotron.css" rel="stylesheet">
+        <link href="./static/storyline.css" rel="stylesheet">
+
+        <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+        <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+        <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
+
         <script>
             (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
             (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -16,8 +37,36 @@
         </script>
     </head>
     <body>
-        <link href="./static/storyline.css" rel="stylesheet">
-        <div id="storylineViz"></div>
+        <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="/">StoryLine News</a>
+            </div>
+            <div class="navbar-collapse collapse">
+              <form class="navbar-form navbar-right" role="form" action="http://storylinenews.us9.list-manage.com/subscribe/post?u=ea787b25e2fc60582c34ddb9b&amp;id=4c8b63c6f1" method="post">
+                <div class="form-group">
+                  <input type="email" value="" name="EMAIL" placeholder="Email" class="form-control">
+                </div>
+                <button type="submit" class="btn btn-success">Learn More</button>
+              </form>
+            </div><!--/.navbar-collapse -->
+          </div>
+        </div>
+
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron vertical-center">
+    </div>
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12" id="storylineViz" style="margin-top: 20px;"></div>
+          </div>
+        </div>
 
         <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
         <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
