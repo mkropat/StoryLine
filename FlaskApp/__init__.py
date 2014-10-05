@@ -13,7 +13,7 @@ def iphone6():
 
 @app.route('/hannah-graham')
 def hannahGraham():
-    return app.send_static_file('hk.html')
+    return render_template('hannah-graham.html')
 
 @app.route('/ebola')
 def ebola():
