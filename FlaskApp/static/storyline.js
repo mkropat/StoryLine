@@ -133,6 +133,7 @@ function renderTimeline(data) {
         .attr("xlink:href", function(d) { return d.urls[0].url })
         .attr('target', '_blank')
         .append("text")
+        .attr("width", "100")
         .attr("x", w/5.0 + 15)
         .attr("y", function(d) { return d.y + nodeRadius/2; })
         .text(function(d) { return d.title })

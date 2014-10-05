@@ -1,12 +1,16 @@
 import copy, json
 from openpyxl import load_workbook
+from selenium import webdriver
+
+driver = webdriver.Chrome()
+driver.set_window_size(560, 150)
 
 wb = load_workbook('NewsStories.xlsx')
 
 names = ['Ebola','iPhone6']
 raw = {}
 stories = []
-event_count = 1
+event_count = 0
 
 for name in names:
     events_by_date = {}
@@ -34,6 +38,7 @@ for name in names:
         if event_datetime:
             event_date = event_datetime.strftime('%Y-%m-%d')
             if not event_date in events_by_date:
+                event_count += 1
                 events_by_date[event_date] = {
                     'eventId':copy.copy(event_count),
                     'title':'',
@@ -41,15 +46,21 @@ for name in names:
                     'urls':[],
                     'tags':set()
                 }
-                event_count += 1
             
             event = events_by_date[event_date]
             if row['title']:
                 event['title'] = row['title']
             
+            try:
+                driver.get(row['url'])
+                driver.save_screenshot('./FlaskApp/static/images/event%s.png' % event['eventId'])
+                img_url = 'http://www.storylinenews.co/static/images/event%s.png' % event['eventId']
+            except:
+                print "Couldn't load img for %s" % row['url']
+            
             event['urls'].append({
                 'url': row['url'],
-                'img': ''
+                'img': img_url
             })
         
             if row['tags']:
@@ -69,7 +80,7 @@ for name in names:
         'events': events
     }
     
-    with open('%s.json'%name, 'w') as fp:
+    with open('./FlaskApp/static/data/%s.json'%name, 'w') as fp:
         json.dump(data,fp)
             
         
