@@ -9,7 +9,7 @@ def home():
 
 @app.route('/iphone6')
 def iphone6():
-    return app.send_static_file('iphone6.html')
+    return render_template('iphone6.html')
 
 @app.route('/hannah-graham')
 def hannahGraham():
