@@ -67,8 +67,7 @@ for name in names:
                 for tag in row['tags'].split(','):
                     event['tags'].add(tag.lower())
         
-    events = events_by_date.values()
-    events.sort(key=lambda x: x['date'])
+    events = sorted(events_by_date.values(), key=lambda x: x['date'])
     
     for event in events:
         event['tags']=list(event['tags'])
