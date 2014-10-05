@@ -138,6 +138,7 @@ function renderTimeline(data) {
         .attr("x", w/5.0 + 15)
         .attr("y", function(d) { return d.y + nodeRadius/2; })
         .text(function(d) { return d.title })
+        .attr('font-family', '"Helvetica Neue",Helvetica,Arial,sans-serif')
         .attr("font-size", "20px")
         .attr("fill", "Black")
         .on("mouseover", function(d) {
