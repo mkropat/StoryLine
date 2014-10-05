@@ -76,7 +76,6 @@ function renderTimeline(data) {
             .attr("x2", w/5.0)
             .attr("y1", y(earliestDate))
             .attr("y2", data.events[data.events.length - 1].y)
-            .attr("stroke", "red")
             .attr("stroke-width", 4);
 
     var svgDef = svg.append('defs').attr("class", "imagePatterns")
