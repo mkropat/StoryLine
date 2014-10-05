@@ -39,7 +39,10 @@ function renderTimeline(data) {
 
     var i;
     for (i in data.events) {
-        data.events[i].date = new Date(data.events[i].date);
+        var tempTime = new Date(data.events[i].date);
+        var tzDifference = tempTime.getTimezoneOffset();
+        //convert the offset to milliseconds, add to tempTime, and make a new Date
+        data.events[i].date = new Date(tempTime.getTime() + tzDifference * 60 * 1000);
     };
 
     var earliestDate = d3.min(data.events, function(d) { return d.date; });
