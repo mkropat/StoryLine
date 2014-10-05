@@ -65,8 +65,6 @@ function renderTimeline(data) {
     }
     var fullHeight = data.events[data.events.length - 1].y;
 
-    console.log(w);
-    console.log(h);
     var svg = d3.select("#storylineViz").append("svg")
                 .attr("id", "playgraph")
                  //better to keep the viewBox dimensions with variables
