@@ -13,7 +13,7 @@ def iphone6():
 
 @app.route('/ebola')
 def ebola():
-    return app.send_static_file('storyline.html')
+    return render_template('ebola.html')
 
 if __name__ == "__main__":
     app.run()
